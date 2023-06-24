@@ -86,7 +86,8 @@ class TurtleBot3Env(robot_gazebo_env.RobotGazeboEnv):
         self._check_all_sensors_ready()
 
         # We Start all the ROS related Subscribers and publishers
-        rospy.Subscriber("/" + str(self.robot_namespace) + "/odom", Odometry, self._odom_callback)
+        rospy.Subscriber("/" + str(self.robot_namespace) + "/odom", Odometry, self._odom_callback)   
+        #rospy.Subscriber("/" + str(self.robot_namespace) + "/odom_noisy", Odometry, self._odom_callback)   
         rospy.Subscriber("/" + str(self.robot_namespace) + "/imu", Imu, self._imu_callback)
         rospy.Subscriber("/" + str(self.robot_namespace) + "/scan", LaserScan, self._laser_scan_callback)
         #rospy.Subscriber("/camera/depth/image_raw", Image, self._camera_depth_image_raw_callback)
@@ -145,6 +146,7 @@ class TurtleBot3Env(robot_gazebo_env.RobotGazeboEnv):
         while self.odom is None and not rospy.is_shutdown():
             try:
                 self.odom = rospy.wait_for_message("/" + str(self.robot_namespace) + "/odom", Odometry, timeout=1.0)
+                #self.odom = rospy.wait_for_message("/" + str(self.robot_namespace) + "/odom_noisy", Odometry, timeout=1.0)
                 rospy.logdebug("turtlebot3_env::_check_odom_ready -> READY!")
 
             except:
@@ -318,6 +320,12 @@ class TurtleBot3Env(robot_gazebo_env.RobotGazeboEnv):
     DESCRIPTION: TODO...Applies the given action to the simulation.
     ''' 
     def _set_action(self, action):
+        raise NotImplementedError()
+
+    '''
+        DESCRIPTION: TODO...Applies the given action to the simulation.
+    '''
+    def valid_action_mask(self):
         raise NotImplementedError()
 
     '''

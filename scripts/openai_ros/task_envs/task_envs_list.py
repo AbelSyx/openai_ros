@@ -23,6 +23,7 @@ NUA TODO:
 
 from gym.envs.registration import register
 from gym import envs
+import rospy
 
 """
     Registers all the ENVS supported in OpenAI ROS. This way we can load them
